@@ -97,6 +97,11 @@ static void show_version( void )
   }
 
 
+SCM scm_edi_show_version(SCM args)
+{
+	show_version();
+}
+
 void show_strerror( const char * const filename, const int errcode )
   {
   if( !scripted_ )
@@ -144,6 +149,10 @@ bool may_access_filename( const char * const name )
 static void guile_inner_main(void *closure, int argc, char **argv)
 {
 	scm_init_guile();
+
+	scm_c_define_gsubr("edi-show-version", 0, 0, 0,
+			(SCM (*)()) scm_edi_show_version);
+
 	scm_c_primitive_load("hello.scm");
 	SCM func_symbol = scm_c_lookup("do-hello");
 	SCM func = scm_variable_ref(func_symbol);
