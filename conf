@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# mcarter 22-Dec-2016 my own configuration experiments.
+# Everyone else should ignore this file
+
+if [ ! -f configure ]; then
+	autoreconf -iv
+fi
+
+DBG=--with-debug
+#GPROF=--with-gprof
+
+# SANITIZER
+SAN=--with-asan
+#if [ -n "${SAN}" ]; then
+#	echo "Configuring with sanitizer"
+#       	SANXX="-no-pie" # workaround a Linux kernel/ASAN wonk as at 23-Aug-2017
+#fi
+source /etc/os-release
+if [ "x$ID" = "xraspbian" ]; then
+	SAN=
+fi	
+if [ "x$OS" = "xWindows_NT" ]; then
+	SAN=
+fi
+
+
+OPTS="$DBG $GPROF $SAN "
+
+#./configure $GPROF $SAN "CXXFLAGS=  -O0 -g" --prefix=$HOME/.local
+#./configure $OPTS "CXXFLAGS= $SANXX" --prefix=$HOME/.local
+./configure $OPTS  --prefix=$HOME/.local
+
+
+
