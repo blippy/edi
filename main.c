@@ -140,18 +140,25 @@ bool may_access_filename( const char * const name )
   return true;
   }
 
-void do_guile_test()
+
+static void guile_inner_main(void *closure, int argc, char **argv)
 {
 	scm_init_guile();
 	scm_c_primitive_load("hello.scm");
 	SCM func_symbol = scm_c_lookup("do-hello");
 	SCM func = scm_variable_ref(func_symbol);
 	scm_call_0(func);
-
+	exit(0);
 }
 
-int main( const int argc, const char * const argv[] )
-  {
+int main( const int argc, char ** argv )
+{
+	scm_boot_guile(argc, argv, guile_inner_main, 0);
+
+	// never gets here
+	return 0;
+
+
   int argind;
   bool loose = false;
   const struct ap_Option options[] =
@@ -198,7 +205,7 @@ int main( const int argc, const char * const argv[] )
   setlocale( LC_ALL, "" );
   if( !init_buffers() ) return 1;
 
-  do_guile_test();
+  //do_guile_test();
 
   while( argind < ap_arguments( &parser ) )
     {
