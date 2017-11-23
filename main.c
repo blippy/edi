@@ -37,6 +37,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <locale.h>
+#include <libguile.h>
 
 #include "carg_parser.h"
 #include "ed.h"
@@ -139,6 +140,15 @@ bool may_access_filename( const char * const name )
   return true;
   }
 
+void do_guile_test()
+{
+	scm_init_guile();
+	scm_c_primitive_load("hello.scm");
+	SCM func_symbol = scm_c_lookup("do-hello");
+	SCM func = scm_variable_ref(func_symbol);
+	scm_call_0(func);
+
+}
 
 int main( const int argc, const char * const argv[] )
   {
@@ -187,6 +197,8 @@ int main( const int argc, const char * const argv[] )
 
   setlocale( LC_ALL, "" );
   if( !init_buffers() ) return 1;
+
+  do_guile_test();
 
   while( argind < ap_arguments( &parser ) )
     {
