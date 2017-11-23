@@ -1,9 +1,9 @@
 AC_PREREQ([2.69])
 AC_INIT([edi], [0.0.0])
-: ${CXXFLAGS=""}dnl https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.69/html_node/C_002b_002b-Compiler.html
+#: ${CXXFLAGS=""}dnl https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.69/html_node/C_002b_002b-Compiler.html
 #AC_CONFIG_HEADERS([config.h])
 
-AC_CONFIG_SRCDIR([main.cc])
+AC_CONFIG_SRCDIR([main.c])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_MACRO_DIRS([m4])
 #AC_PREREQ([0.29])
@@ -20,7 +20,7 @@ AC_CONFIG_MACRO_DIRS([m4])
 #AC_SUBST(CURSES_LIBS, `pkg-config --libs ncurses`)
 
 
-AC_PROG_CXX
+AC_PROG_CC
 #AC_PROG_YACC
 
 AC_CONFIG_FILES([Makefile])

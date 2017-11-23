@@ -83,6 +83,8 @@ static void show_help( void )
   }
 
 
+#define PROGVERSION "0.0.0"
+
 static void show_version( void )
   {
   printf( "GNU %s %s\n", program_name, PROGVERSION );
